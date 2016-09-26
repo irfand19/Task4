@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 public class FragmentOne extends Fragment {
 
+    TextView total_out;
     View mView;
     DatabaseExpenses myDB;
     RecyclerView rv_products;
@@ -31,55 +32,64 @@ public class FragmentOne extends Fragment {
         mView = inflater.inflate(R.layout.fragment_one, container, false);
 
         myDB = new DatabaseExpenses(getActivity());
-
+        total_out = (TextView) mView.findViewById(R.id.tv_total_out);
         rv_products = (RecyclerView) mView.findViewById(R.id.rv_products);
         rv_products.setHasFixedSize(true);
         rv_layout_manager = new LinearLayoutManager(getActivity());
         rv_products.setLayoutManager(rv_layout_manager);
         rv_adapter = new MyAdapter(loadDataExpense());
         rv_products.setAdapter(rv_adapter);
+        calculateDataExpense();
 
+        list = (Button) mView.findViewById(R.id.btn_liat);
+        list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Cursor expenses = myDB.list_expense();
+                if (expenses.getCount() == 0) {
+                    alert_message("Message", "No Data Expense Found");
+                    return;
+                }
 
-
-//        list = (Button) mView.findViewById(R.id.btn_liat);
-//        list.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Cursor expenses = myDB.list_expense();
-//                if (expenses.getCount() == 0) {
-//                    alert_message("Message", "No Data Expense Found");
-//                    return;
-//                }
-//
-//                //append data student to buffer
-//                StringBuffer buffer = new StringBuffer();
-//                while (expenses.moveToNext()) {
-//                    buffer.append("Description : " + expenses.getString(1) + "\n");
-//                    buffer.append("Amount       : " + expenses.getString(2) + "\n\n");
-//                }
-//                //show data student
-//                alert_message("List Expenses", buffer.toString());
-//            }
-//        });
+                //append data student to buffer
+                StringBuffer buffer = new StringBuffer();
+                while (expenses.moveToNext()) {
+                    buffer.append("Description : " + expenses.getString(1) + "\n");
+                    buffer.append("Amount       : " + expenses.getString(2) + "\n\n");
+                }
+                //show data student
+                alert_message("List Expenses", buffer.toString());
+            }
+        });
 
         // Inflate the layout for this fragment
         return mView;
     }
 
-//    private void alert_message(String title, String message) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//        builder.setCancelable(true);
-//        builder.setTitle(title);
-//        builder.setMessage(message);
-//        builder.show();
-//    }
+    private void calculateDataExpense() {
+        int total_expense = 0;
+        Cursor expenses = myDB.list_expense();
+
+        while (expenses.moveToNext()) {
+            total_expense = total_expense + Integer.parseInt(expenses.getString(2));
+        }
+        total_out.setText("TOTAL                                              $ "+total_expense);
+    }
+
+    private void alert_message(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
+    }
 
     private String[] loadDataExpense() {
         Cursor expenses = myDB.list_expense();
         String[] products = new String[expenses.getCount()];
 
         while (expenses.moveToNext()) {
-            products[expenses.getPosition()]=expenses.getString(1)+"       "+expenses.getString(2);
+            products[expenses.getPosition()]=expenses.getString(1)+"\t\t"+expenses.getString(2);
         }
         return products;
     }
