@@ -89,7 +89,7 @@
                     android:gravity="center_vertical"/>
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_products2"
+                    android:id="@+id/rv_in"
                     android:scrollbars="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"/>
@@ -119,6 +119,15 @@
             android:layout_height="wrap_content"
             android:text=" BALANCE                                                     $ 0"/>
 
+        <Button
+            android:id="@+id/btn_liat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tes"
+            android:textSize="12sp"/>
+
     </LinearLayout>
+
+
 
 </FrameLayout>

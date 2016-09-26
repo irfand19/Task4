@@ -35,25 +35,7 @@ public class MainActivity extends AppCompatActivity
         transaction.addToBackStack(null);
         transaction.commit();
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
-//        <android.support.design.widget.FloatingActionButton
-//        android:id="@+id/fab"
-//        android:layout_width="wrap_content"
-//        android:layout_height="wrap_content"
-//        android:layout_gravity="bottom|end"
-//        android:layout_margin="@dimen/fab_margin"
-//        android:src="@android:drawable/ic_dialog_email" />
-
-
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -108,36 +90,24 @@ public class MainActivity extends AppCompatActivity
 //        }
         FragmentTransaction ft = fm.beginTransaction();
         switch (item.getItemId()) {
-            case R.id.nav_1 :
+            case R.id.nav_1:
                 fragment = new FragmentOne();
-                ft.replace(R.id.fragment_place,  new FragmentOne());
+                ft.replace(R.id.fragment_place, new FragmentOne());
                 ft.commit();
                 break;
-            case R.id.nav_2 :
+            case R.id.nav_2:
                 fragment = new FragmentOne();
-                ft.replace(R.id.fragment_place,  new FragmentTwo());
+                ft.replace(R.id.fragment_place, new FragmentTwo());
                 ft.commit();
                 break;
-            case R.id.nav_3 :
+            case R.id.nav_3:
                 fragment = new FragmentOne();
-                ft.replace(R.id.fragment_place,  new FragmentThree());
+                ft.replace(R.id.fragment_place, new FragmentThree());
                 ft.commit();
                 break;
         }
+
         return false;
 
-//        // Handle navigation view item clicks here.
-//        int id = item.getItemId();
-//
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        }
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawer.closeDrawer(GravityCompat.START);
-//        return true;
     }
 }
