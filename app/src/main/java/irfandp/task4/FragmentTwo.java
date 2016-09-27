@@ -19,8 +19,9 @@ public class FragmentTwo extends Fragment implements View.OnClickListener {
 
     View mView;
     DatabaseExpenses myDB;
-    EditText amount_out, des_out;
-    Button add_out, list_out;
+    DatabaseIncome myDB2;
+    EditText amount_out, des_out, amount_in, des_in;
+    Button add_out, list_out, add_in, list_in;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,12 +29,19 @@ public class FragmentTwo extends Fragment implements View.OnClickListener {
         mView = inflater.inflate(R.layout.fragment_two, container, false);
 
         myDB = new DatabaseExpenses(getActivity());
+        myDB2 = new DatabaseIncome(getActivity());
         des_out = (EditText) mView.findViewById(R.id.et_des_out);
         amount_out = (EditText) mView.findViewById(R.id.et_amount_out);
+        des_in = (EditText) mView.findViewById(R.id.et_des_in);
+        amount_in = (EditText) mView.findViewById(R.id.et_amount_in);
         add_out = (Button) mView.findViewById(R.id.btn_add_out);
         list_out = (Button) mView.findViewById(R.id.btn_list_out);
+        add_in = (Button) mView.findViewById(R.id.btn_add_in);
+        list_in = (Button) mView.findViewById(R.id.btn_list_in);
         add_out.setOnClickListener(this);
         list_out.setOnClickListener(this);
+        add_in.setOnClickListener(this);
+        list_in.setOnClickListener(this);
 
         return mView;
 
@@ -68,6 +76,34 @@ public class FragmentTwo extends Fragment implements View.OnClickListener {
                 //show data student
                 alert_message("List Expenses", buffer.toString());
                 break;
+
+            case R.id.btn_add_in :
+                boolean result2 = myDB2.save_expense(des_in.getText().toString(),
+                        amount_in.getText().toString()
+                );
+                if (result2)
+                    Toast.makeText(getActivity(), "Success Add Expense", Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(getActivity(), "Fails Add Expense", Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.btn_list_in :
+                Cursor incomes = myDB2.list_expense();
+                if (incomes.getCount() == 0) {
+                    alert_message("Message", "No Data Expense Found");
+                    return;
+                }
+
+                //append data student to buffer
+                StringBuffer buffer2 = new StringBuffer();
+                while (incomes.moveToNext()) {
+                    buffer2.append("Description : " + incomes.getString(1) + "\n");
+                    buffer2.append("Amount       : " + incomes.getString(2) + "\n\n");
+                }
+                //show data student
+                alert_message("List Expenses", buffer2.toString());
+                break;
+
         }
     }
 

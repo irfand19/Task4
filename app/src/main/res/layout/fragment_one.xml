@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:text="Overview Expanses"
                     android:textAlignment="center"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:fontFamily="casual"
                     android:gravity="center_vertical"/>
 
@@ -53,6 +53,7 @@
                     android:id="@+id/tv_total_out"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:text="TOTAL                                                           $ 0"/>
 
 
@@ -85,12 +86,12 @@
                     android:layout_height="wrap_content"
                     android:text="Overview Income"
                     android:textAlignment="center"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:fontFamily="casual"
                     android:gravity="center_vertical"/>
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_in"
+                    android:id="@+id/rv_products2"
                     android:scrollbars="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"/>
@@ -100,11 +101,11 @@
                     android:layout_height="14dp" />
 
                 <TextView
+                    android:id="@+id/tv_total_in"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:text="TOTAL                                                           $ 0"/>
-
-
 
             </LinearLayout>
 
@@ -115,17 +116,35 @@
             android:layout_height="11dp" />
 
         <TextView
+            android:id="@+id/tv_balance"
             android:paddingLeft="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:text=" BALANCE                                                     $ 0"/>
 
-        <Button
-            android:id="@+id/btn_liat"
-            android:layout_width="wrap_content"
+        <!--
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="tes"
-            android:textSize="12sp"/>
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_liat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="liat expenses"
+                android:textSize="12sp"/>
+
+            <Button
+                android:id="@+id/btn_liat2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="liat income"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+        -->
 
     </LinearLayout>
 

@@ -21,6 +21,7 @@ public class DatabaseExpenses extends SQLiteOpenHelper {
             COL_1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COL_2 + " TEXT, " +
             COL_3 + " TEXT );";
+
     public DatabaseExpenses(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -50,19 +51,20 @@ public class DatabaseExpenses extends SQLiteOpenHelper {
         return expenses;
     }
 
-//    public boolean update_student(String id, String name, String surname, String marks) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues content_values = new ContentValues();
-//        content_values.put(COL_1, id);
-//        content_values.put(COL_2, name);
-//        content_values.put(COL_3, surname);
-//        db.update(TABLE_NAME, content_values, "ID = ? ", new String[]{id});
-//        return true;
-//    }
-//    public Integer delete_student(String id) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        return db.delete(TABLE_NAME, "ID = ?", new String[] {id});
-//    }
+    public boolean update_student(String id, String description, String amount) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues content_values = new ContentValues();
+        content_values.put(COL_1, id);
+        content_values.put(COL_2, description);
+        content_values.put(COL_3, amount);
+        db.update(TABLE_NAME, content_values, "ID = ? ", new String[]{id});
+        return true;
+    }
+
+    public Integer delete_student(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME, "ID = ?", new String[] {id});
+    }
 
 
 }
