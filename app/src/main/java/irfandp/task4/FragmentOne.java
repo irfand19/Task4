@@ -62,49 +62,6 @@ public class FragmentOne extends Fragment {
         total_in.setText("TOTAL                                              $ " + calculateDataIncome());
         total_bal.setText(" BALANCE                                        $ " + calculateBalance(calculateDataIncome(), calculateDataExpense()));
 
-
-//        list = (Button) mView.findViewById(R.id.btn_liat);
-//        list.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Cursor expenses = myDB.list_expense();
-//                if (expenses.getCount() == 0) {
-//                    alert_message("Message", "No Data Expense Found");
-//                    return;
-//                }
-//
-//                //append data student to buffer
-//                StringBuffer buffer = new StringBuffer();
-//                while (expenses.moveToNext()) {
-//                    buffer.append("Description : " + expenses.getString(1) + "\n");
-//                    buffer.append("Amount       : " + expenses.getString(2) + "\n\n");
-//                }
-//                //show data student
-//                alert_message("List Expenses", buffer.toString());
-//            }
-//        });
-//
-//        list2 = (Button) mView.findViewById(R.id.btn_liat2);
-//        list2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Cursor expenses = myDB2.list_expense();
-//                if (expenses.getCount() == 0) {
-//                    alert_message("Message", "No Data Expense Found");
-//                    return;
-//                }
-//
-//                //append data student to buffer
-//                StringBuffer buffer = new StringBuffer();
-//                while (expenses.moveToNext()) {
-//                    buffer.append("Description : " + expenses.getString(1) + "\n");
-//                    buffer.append("Amount       : " + expenses.getString(2) + "\n\n");
-//                }
-//                //show data student
-//                alert_message("List Expenses", buffer.toString());
-//            }
-//        });
-
         // Inflate the layout for this fragment
         return mView;
     }
@@ -117,7 +74,7 @@ public class FragmentOne extends Fragment {
 
     private int calculateDataIncome() {
         int total_income = 0;
-        Cursor incomes = myDB2.list_expense();
+        Cursor incomes = myDB2.list_income();
 
         while (incomes.moveToNext()) {
             total_income = total_income + Integer.parseInt(incomes.getString(2));
@@ -126,11 +83,11 @@ public class FragmentOne extends Fragment {
     }
 
     private String[] loadDataIncome() {
-        Cursor incomes = myDB2.list_expense();
+        Cursor incomes = myDB2.list_income();
         String[] products2 = new String[incomes.getCount()];
 
         while (incomes.moveToNext()) {
-            products2[incomes.getPosition()] = incomes.getString(1) + "\t\t\t\t\t\t $ " + incomes.getString(2);
+            products2[incomes.getPosition()] = incomes.getString(1) + "\t\t\t\t\t\t\t\t\t $ " + incomes.getString(2);
         }
         return products2;
     }
@@ -145,20 +102,12 @@ public class FragmentOne extends Fragment {
         return total_expense;
     }
 
-//    private void alert_message(String title, String message) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//        builder.setCancelable(true);
-//        builder.setTitle(title);
-//        builder.setMessage(message);
-//        builder.show();
-//    }
-
     private String[] loadDataExpense() {
         Cursor expenses = myDB.list_expense();
         String[] products = new String[expenses.getCount()];
 
         while (expenses.moveToNext()) {
-            products[expenses.getPosition()] = expenses.getString(1) + "\t\t\t\t\t\t $ " + expenses.getString(2);
+            products[expenses.getPosition()] = expenses.getString(1) + "\t\t\t\t\t\t\t\t\t $ " + expenses.getString(2);
         }
         return products;
     }
@@ -218,52 +167,105 @@ public class FragmentOne extends Fragment {
                         update.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                boolean update_result = myDB.update_student(data.getString(data.getColumnIndex("ID")),
+                                boolean update_result = myDB.update_expense(data.getString(data.getColumnIndex("ID")),
                                         out.getText().toString(),
                                         out_update.getText().toString());
                                 if (update_result) {
-                                    // Reload current fragment
-//                                    FragmentManager fm = getSupportFragmentManager();
-//                                    //this for clean stack of fragment
-//                                    fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//                                    FragmentTransaction ft = fm.beginTransaction();
-//                                    ft.replace(R.id.fragment_place, new FragmentOne());
-//                                    ft.commit();
-
                                     dialog.cancel();
+                                    FragmentManager fm = getFragmentManager();
+                                    fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                    FragmentTransaction ft = fm.beginTransaction();
+                                    ft.replace(R.id.fragment_place, new FragmentOne());
+                                    ft.commit();
                                 } else {
-                                    Toast.makeText(getActivity(), "Fails update data Student",
+                                    Toast.makeText(getActivity(), "Fails update data expense",
                                             Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
+
+                        Button delete = (Button) dialog.findViewById(R.id.btn_del_out);
+                        delete.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Integer del_result = myDB.delete_expense(data.getString(data.getColumnIndex("ID")));
+                                if (del_result > 0) {
+                                    dialog.cancel();
+                                    FragmentManager fm = getFragmentManager();
+                                    fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                    FragmentTransaction ft = fm.beginTransaction();
+                                    ft.replace(R.id.fragment_place, new FragmentOne());
+                                    ft.commit();
+                                }
+                                else{
+                                    Toast.makeText(getActivity(), "Fails delete data expense", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
                         dialog.show();
 
                     } else {
-                        Cursor data = myDB2.list_expense();
+                        final Cursor data = myDB2.list_income();
                         data.moveToPosition(position);
                         //                    costum dialog
                         final Dialog dialog = new Dialog(getActivity());
                         dialog.setContentView(R.layout.dialog_out);
                         dialog.setTitle("Update or Delete");
 
-                        EditText out = (EditText) dialog.findViewById(R.id.et_out);
+                        final EditText out = (EditText) dialog.findViewById(R.id.et_out);
                         String des_ins = data.getString(data.getColumnIndex("DESCRIPTION"));
                         out.setText(des_ins);
 
-                        EditText out_update = (EditText) dialog.findViewById(R.id.et_out_update);
+                        final EditText out_update = (EditText) dialog.findViewById(R.id.et_out_update);
                         String des_amos = data.getString(data.getColumnIndex("AMOUNT"));
                         out_update.setText(des_amos);
+
+                        Button update = (Button) dialog.findViewById(R.id.btn_updt_out);
+                        update.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                boolean update_result = myDB2.update_income(data.getString(data.getColumnIndex("ID")),
+                                        out.getText().toString(),
+                                        out_update.getText().toString());
+                                if (update_result) {
+                                    dialog.cancel();
+                                    FragmentManager fm = getFragmentManager();
+                                    fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                    FragmentTransaction ft = fm.beginTransaction();
+                                    ft.replace(R.id.fragment_place, new FragmentOne());
+                                    ft.commit();
+                                } else {
+                                    Toast.makeText(getActivity(), "Fails update data income",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
+                        Button delete = (Button) dialog.findViewById(R.id.btn_del_out);
+                        delete.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Integer del_result = myDB2.delete_income(data.getString(data.getColumnIndex("ID")));
+                                if (del_result > 0){
+                                    dialog.cancel();
+                                    FragmentManager fm = getFragmentManager();
+                                    fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                    FragmentTransaction ft = fm.beginTransaction();
+                                    ft.replace(R.id.fragment_place, new FragmentOne());
+                                    ft.commit();
+                                }
+                                else
+                                    Toast.makeText(getActivity(), "Fails delete data income", Toast.LENGTH_LONG).show();
+                            }
+                        });
+
                         dialog.show();
                     }
 
                 }
             });
         }
-
-//        private FragmentManager getSupportFragmentManager() {
-//            return getSupportFragmentManager();
-//        }
 
         @Override
         public int getItemCount() {

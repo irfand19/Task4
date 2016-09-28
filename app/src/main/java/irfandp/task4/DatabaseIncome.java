@@ -37,7 +37,7 @@ public class DatabaseIncome extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean save_expense(String description, String amount) {
+    public boolean save_income(String description, String amount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues content_values = new ContentValues();
         content_values.put(COL_2, description);
@@ -46,10 +46,25 @@ public class DatabaseIncome extends SQLiteOpenHelper {
         return result != 1;
     }
 
-    public Cursor list_expense() {
+    public Cursor list_income() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor expenses = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return expenses;
+    }
+
+    public boolean update_income(String id, String description, String amount) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues content_values = new ContentValues();
+        content_values.put(COL_1, id);
+        content_values.put(COL_2, description);
+        content_values.put(COL_3, amount);
+        db.update(TABLE_NAME, content_values, "ID = ? ", new String[]{id});
+        return true;
+    }
+
+    public Integer delete_income(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME, "ID = ?", new String[] {id});
     }
 
 //    public boolean update_student(String id, String name, String surname, String marks) {

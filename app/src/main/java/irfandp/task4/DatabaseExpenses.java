@@ -51,7 +51,7 @@ public class DatabaseExpenses extends SQLiteOpenHelper {
         return expenses;
     }
 
-    public boolean update_student(String id, String description, String amount) {
+    public boolean update_expense(String id, String description, String amount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues content_values = new ContentValues();
         content_values.put(COL_1, id);
@@ -61,7 +61,7 @@ public class DatabaseExpenses extends SQLiteOpenHelper {
         return true;
     }
 
-    public Integer delete_student(String id) {
+    public Integer delete_expense(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_NAME, "ID = ?", new String[] {id});
     }

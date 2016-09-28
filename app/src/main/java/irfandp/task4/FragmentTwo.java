@@ -78,7 +78,7 @@ public class FragmentTwo extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.btn_add_in :
-                boolean result2 = myDB2.save_expense(des_in.getText().toString(),
+                boolean result2 = myDB2.save_income(des_in.getText().toString(),
                         amount_in.getText().toString()
                 );
                 if (result2)
@@ -88,7 +88,7 @@ public class FragmentTwo extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.btn_list_in :
-                Cursor incomes = myDB2.list_expense();
+                Cursor incomes = myDB2.list_income();
                 if (incomes.getCount() == 0) {
                     alert_message("Message", "No Data Expense Found");
                     return;
