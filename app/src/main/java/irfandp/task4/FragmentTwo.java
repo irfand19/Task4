@@ -58,6 +58,9 @@ public class FragmentTwo extends Fragment implements View.OnClickListener {
                     Toast.makeText(getActivity(), "Success Add Expense", Toast.LENGTH_LONG).show();
                 else
                     Toast.makeText(getActivity(), "Fails Add Expense", Toast.LENGTH_LONG).show();
+
+                des_out.setText("");
+                amount_out.setText("");
                 break;
 
             case R.id.btn_list_out :
@@ -82,15 +85,18 @@ public class FragmentTwo extends Fragment implements View.OnClickListener {
                         amount_in.getText().toString()
                 );
                 if (result2)
-                    Toast.makeText(getActivity(), "Success Add Expense", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Success Add Income", Toast.LENGTH_LONG).show();
                 else
-                    Toast.makeText(getActivity(), "Fails Add Expense", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Fails Add Income", Toast.LENGTH_LONG).show();
+
+                des_in.setText("");
+                amount_in.setText("");
                 break;
 
             case R.id.btn_list_in :
                 Cursor incomes = myDB2.list_income();
                 if (incomes.getCount() == 0) {
-                    alert_message("Message", "No Data Expense Found");
+                    alert_message("Message", "No Data Income Found");
                     return;
                 }
 
@@ -101,7 +107,7 @@ public class FragmentTwo extends Fragment implements View.OnClickListener {
                     buffer2.append("Amount       : " + incomes.getString(2) + "\n\n");
                 }
                 //show data student
-                alert_message("List Expenses", buffer2.toString());
+                alert_message("List Income", buffer2.toString());
                 break;
 
         }
