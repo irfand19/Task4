@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingTop="110dp">
+        android:paddingTop="90dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -27,20 +27,6 @@
             android:id="@+id/tv_response"/>
 
         <Button
-            android:id="@+id/btn_get"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GET"
-            android:fontFamily="casual"
-            android:layout_gravity="center_horizontal"
-            />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            />
-
-        <Button
             android:id="@+id/btn_post"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,6 +38,28 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_pend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="casual"
+                android:text="Pending Table"/>
+
+            <Button
+                android:id="@+id/btn_sent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="casual"
+                android:text="Sent Table"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -20,6 +20,8 @@ public class FragmentTwo extends Fragment implements View.OnClickListener {
     View mView;
     DatabaseExpenses myDB;
     DatabaseIncome myDB2;
+    DatabasePending myDB3;
+    //    DatabaseSent myDB4;
     EditText amount_out, des_out, amount_in, des_in;
     Button add_out, list_out, add_in, list_in;
 
@@ -30,6 +32,8 @@ public class FragmentTwo extends Fragment implements View.OnClickListener {
 
         myDB = new DatabaseExpenses(getActivity());
         myDB2 = new DatabaseIncome(getActivity());
+        myDB3 = new DatabasePending(getActivity());
+//        myDB4 = new DatabaseSent(getActivity());
         des_out = (EditText) mView.findViewById(R.id.et_des_out);
         amount_out = (EditText) mView.findViewById(R.id.et_amount_out);
         des_in = (EditText) mView.findViewById(R.id.et_des_in);
@@ -51,10 +55,10 @@ public class FragmentTwo extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_add_out :
-                boolean result = myDB.save_expense(des_out.getText().toString(),
-                        amount_out.getText().toString()
-                );
-                if (result)
+                boolean result = myDB.save_expense(des_out.getText().toString(), amount_out.getText().toString());
+                boolean result_2 = myDB3.save_pending(des_out.getText().toString(), amount_out.getText().toString());
+
+                if (result && result_2)
                     Toast.makeText(getActivity(), "Success Add Expense", Toast.LENGTH_LONG).show();
                 else
                     Toast.makeText(getActivity(), "Fails Add Expense", Toast.LENGTH_LONG).show();
@@ -104,7 +108,8 @@ public class FragmentTwo extends Fragment implements View.OnClickListener {
                 StringBuffer buffer2 = new StringBuffer();
                 while (incomes.moveToNext()) {
                     buffer2.append("Description : " + incomes.getString(1) + "\n");
-                    buffer2.append("Amount       : " + incomes.getString(2) + "\n\n");
+                    buffer2.append("Amount       : " + incomes.getString(2) + "\n");
+                    buffer2.append("Position      : " + incomes.getPosition() + "\n\n");
                 }
                 //show data student
                 alert_message("List Income", buffer2.toString());
