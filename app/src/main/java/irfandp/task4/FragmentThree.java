@@ -32,7 +32,7 @@ public class FragmentThree extends Fragment {
 
     Button btn_post, btn_pend, btn_sent;
     View mView;
-//    DatabaseExpenses myDB;
+    //    DatabaseExpenses myDB;
     DatabasePending myDB3;
     DatabaseSent myDB4;
     TextView tv_cursor, tv_respon;
@@ -72,7 +72,7 @@ public class FragmentThree extends Fragment {
 
                 final Cursor expenses = myDB3.list_pending();
                 if (expenses.getCount() == 0) {
-                    alert_message("Message", "No Data Income Found");
+                    alert_message("Message", "No Data Pending Found");
                     return;
                 }
 
@@ -95,10 +95,6 @@ public class FragmentThree extends Fragment {
 //                            tv_cursor.setText(String.valueOf(expenses.getPosition()) + " - " + String.valueOf(status) + " - " + String.valueOf(response.body()));
 //                            Toast.makeText(getActivity(), String.valueOf(expenses.getPosition()), Toast.LENGTH_SHORT).show();
 
-                        if (progressDialog.isShowing()) {
-                            progressDialog.dismiss();
-                        }
-
                         boolean result2 = myDB4.save_sent(expenses.getString(1), expenses.getString(2));
                         if (result2)
                             tv_cursor.setText("Success Sent");
@@ -108,13 +104,14 @@ public class FragmentThree extends Fragment {
                         Integer del_result = myDB3.delete_pending(expenses.getString(expenses.getColumnIndex("ID")));
                         if (del_result > 0) {
                             tv_respon.setText("Success delete pending data");
-                        }
-                        else{
+                        } else {
                             tv_respon.setText("Fails delete pending data");
                         }
 
-                        Toast.makeText(getActivity(), "Data success synchronize to server", Toast.LENGTH_SHORT).show();
-
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(), "Data success synchronize to server", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
@@ -125,6 +122,13 @@ public class FragmentThree extends Fragment {
                         }
                     }
                 });
+
+//                // implement for delete
+//                Call<User> call = user_api.deleteUser("saf23984n8(*dsjf");
+//                // implement for show a user
+//                Call<User> call = user_api.getUser("saf23984n8(*dsjf");
+//                // implement for update a user
+//                Call<User> call = user_api.updateUser("saf23984n8(*dsjf", new User("", "12345667", ""));
 
             }
         });
