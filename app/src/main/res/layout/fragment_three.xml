@@ -30,7 +30,7 @@
             android:id="@+id/btn_post"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="POST"
+            android:text="SYNC"
             android:fontFamily="casual"
             android:layout_gravity="center_horizontal"/>
 
@@ -51,6 +51,13 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="casual"
                 android:text="Pending Table"/>
+
+            <Button
+                android:id="@+id/btn_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="casual"
+                android:text="Edit Table"/>
 
             <Button
                 android:id="@+id/btn_sent"
