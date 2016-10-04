@@ -28,8 +28,7 @@ public class FragmentOne extends Fragment {
     View mView;
     DatabaseExpenses myDB;
     DatabaseIncome myDB2;
-    DatabasePending myDB3;
-    DatabaseEdit myDB5;
+    DatabaseEdit myDB4;
     RecyclerView rv_products, rv_products2;
     RecyclerView.Adapter rv_adapter, rv_adapter2;
     RecyclerView.LayoutManager rv_layout_manager, rv_layout_manager2;
@@ -42,8 +41,7 @@ public class FragmentOne extends Fragment {
 
         myDB = new DatabaseExpenses(getActivity());
         myDB2 = new DatabaseIncome(getActivity());
-        myDB3 = new DatabasePending(getActivity());
-        myDB5 = new DatabaseEdit(getActivity());
+        myDB4 = new DatabaseEdit(getActivity());
         total_out = (TextView) mView.findViewById(R.id.tv_total_out);
         total_in = (TextView) mView.findViewById(R.id.tv_total_in);
         total_bal = (TextView) mView.findViewById(R.id.tv_balance);
@@ -176,7 +174,7 @@ public class FragmentOne extends Fragment {
                                         out_update.getText().toString());
                                 if (update_result) {
 
-                                    boolean result = myDB5.save_edit(out.getText().toString(), out_update.getText().toString(),"Update");
+                                    boolean result = myDB4.save_edit(out.getText().toString(), out_update.getText().toString(),"Update");
 
                                     dialog.cancel();
                                     FragmentManager fm = getFragmentManager();
@@ -195,7 +193,7 @@ public class FragmentOne extends Fragment {
                         delete.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                boolean result = myDB5.save_edit(out.getText().toString(), out_update.getText().toString(),"Delete");
+                                boolean result = myDB4.save_edit(out.getText().toString(), out_update.getText().toString(),"Delete");
                                 Integer del_result = myDB.delete_expense(data.getString(data.getColumnIndex("ID")));
                                 if (del_result > 0) {
                                     dialog.cancel();

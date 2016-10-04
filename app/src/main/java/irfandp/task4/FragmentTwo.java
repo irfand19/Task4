@@ -21,7 +21,6 @@ public class FragmentTwo extends Fragment implements View.OnClickListener {
     DatabaseExpenses myDB;
     DatabaseIncome myDB2;
     DatabasePending myDB3;
-    //    DatabaseSent myDB4;
     EditText amount_out, des_out, amount_in, des_in;
     Button add_out, list_out, add_in, list_in;
 
@@ -33,7 +32,6 @@ public class FragmentTwo extends Fragment implements View.OnClickListener {
         myDB = new DatabaseExpenses(getActivity());
         myDB2 = new DatabaseIncome(getActivity());
         myDB3 = new DatabasePending(getActivity());
-//        myDB4 = new DatabaseSent(getActivity());
         des_out = (EditText) mView.findViewById(R.id.et_des_out);
         amount_out = (EditText) mView.findViewById(R.id.et_amount_out);
         des_in = (EditText) mView.findViewById(R.id.et_des_in);
